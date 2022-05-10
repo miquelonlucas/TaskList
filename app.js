@@ -15,7 +15,16 @@ function loadEventListeners() {
 }
 
 
+
 // FUNCTIONS
+
+// Task counter
+function taskCounter(){
+    let taskListLength = $(".collection-item").children().length;
+    return taskListLength;
+}
+
+
 
 // Add task event
 function addTask(e){
@@ -31,6 +40,12 @@ function addTask(e){
     // Add class to li
     li.className = 'collection-item';
     
+    if(taskInput.value.toLowerCase() === 'workout' || taskInput.value.toLowerCase() === 'study'){
+        li.classList.add('white-text');
+        li.classList.add('red');
+        li.classList.add('lighten-1');
+    }
+
     li.appendChild(document.createTextNode(taskInput.value));
     
     const link = document.createElement('a');
@@ -45,6 +60,11 @@ function addTask(e){
     console.log(li);
     
     taskInput.value = '';
+
+    if (taskCounter() != 0){
+        let taskTitle = document.querySelector('#task-title');
+        taskTitle.innerHTML = `Tasks<span class="badge">${taskCounter()} to go</span>`;
+    } 
 
     e.preventDefault();
 }
