@@ -1,77 +1,50 @@
-// Create element
-const li  = document.createElement('li');
+// UI vars
+const form = document.querySelector('#task-form');
+const taskList = document.querySelector('.collection');
+const clearButton = document.querySelector('.clear-tasks');
+const filter = document.querySelector('.filter');
+const taskInput = document.querySelector('#task');
 
-// Add class
-li.className = 'collection-item';
+// Load EventListeners (call)
+loadEventListeners();
 
-// Add id
-li.id = 'new-item';
-
-// Add attribute
-li.setAttribute('title', 'New Item');
-
-// Create text node and append
-li.appendChild(document.createTextNode('Hello World'));
-
-// Create new link element
-const link = document.createElement('a');
-// Add classes
-link.className = 'delete-item secondary-content';
-// Add icon html
-link.innerHTML = '<i class="fa fa-remove"></i>';
-
-// Append link into li
-li.appendChild(link);
-
-// Append li as child to ul
-document.querySelector('ul.collection').appendChild(li);
-
-console.log(li);
-
-// REMOVE ELEMENT
-
-const lis = document.querySelectorAll('li');
-const list = document.querySelector('ul');
-
-// Remove list item
-lis[0].remove();
-
-// Remove Child Element
-list.removeChild(lis[2]);
-
-document.querySelector('.clear-tasks').addEventListener('click', removeTask);
-
-function removeTask(e){
-
-    let val = e;
-    val = val.target;
-
-
-    console.log(val);
+// Load EventListeners
+function loadEventListeners() {
+    // Add task event
+    form.addEventListener('submit', addTask);
 }
 
-// Add Task
 
-const form = document.querySelector('form');
-const taskInput = document.getElementById('task');
-const heading = document.querySelector('h5');
+// FUNCTIONS
 
-// Clear Input 
-taskInput.value = '';
+// Add task event
+function addTask(e){
+    if(taskInput.value === ''){
+        return alert('I\'ve got a blank space, baby.');
+        e.preventDefault();
+    }
 
-taskInput.addEventListener('keydown', runEvent);
+    
+    // Create li element
+    const li = document.createElement('li');
+    
+    // Add class to li
+    li.className = 'collection-item';
+    
+    li.appendChild(document.createTextNode(taskInput.value));
+    
+    const link = document.createElement('a');
+    link.className = 'delete-item secondary-content';
+    
+    link.innerHTML = '<i class="fa fa-remove"><\i>';
 
-function runEvent(e){
-    console.log(e.target.value);
+    li.appendChild(link);
 
-    heading.innerText = e.target.value;
+    taskList.appendChild(li);
+
+    console.log(li);
+    
+    taskInput.value = '';
+
+    e.preventDefault();
 }
-
-// function (){
-//     let taskList = document.querySelector('.collection');
-    
-//     let newListItem = document.createElement("li");
-    
-//     newListItem.appendChild(document.createTextNode("New Item"));
-
-// }
