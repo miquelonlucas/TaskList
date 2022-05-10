@@ -12,6 +12,9 @@ loadEventListeners();
 function loadEventListeners() {
     // Add task event
     form.addEventListener('submit', addTask);
+
+    // 'Clear tasks' button
+    clearButton.addEventListener('click', clearTasks);
 }
 
 
@@ -23,8 +26,6 @@ function taskCounter(){
     let taskListLength = $(".collection-item").children().length;
     return taskListLength;
 }
-
-
 
 // Add task event
 function addTask(e){
@@ -67,4 +68,12 @@ function addTask(e){
     } 
 
     e.preventDefault();
+}
+
+// Clear tasks
+
+function clearTasks(){
+    while (taskList.firstChild) {
+        taskList.removeChild(taskList.firstChild);
+    }
 }
