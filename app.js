@@ -15,6 +15,9 @@ function loadEventListeners() {
 
     // 'Clear tasks' button
     clearButton.addEventListener('click', clearTasks);
+
+    // Delete task
+    taskList.addEventListener('click', deleteTask);
 }
 
 
@@ -25,6 +28,17 @@ function loadEventListeners() {
 function taskCounter(){
     let taskListLength = $(".collection-item").children().length;
     return taskListLength;
+}
+
+// Task counter update
+
+function taskCounterUpdate(){
+    let taskTitle = document.querySelector('#task-title');
+    if (taskCounter() != 0){
+        taskTitle.innerHTML = `Tasks<span class="badge">${taskCounter()} to go</span>`;
+    } else {
+        taskTitle.innerHTML = 'Tasks';
+    }
 }
 
 // Add task event
@@ -62,10 +76,7 @@ function addTask(e){
     
     taskInput.value = '';
 
-    if (taskCounter() != 0){
-        let taskTitle = document.querySelector('#task-title');
-        taskTitle.innerHTML = `Tasks<span class="badge">${taskCounter()} to go</span>`;
-    } 
+    taskCounterUpdate()
 
     e.preventDefault();
 }
@@ -75,5 +86,16 @@ function addTask(e){
 function clearTasks(){
     while (taskList.firstChild) {
         taskList.removeChild(taskList.firstChild);
+    }
+    taskCounterUpdate()
+}
+
+
+function deleteTask(e){
+    if(e.target.className == 'fa fa-remove'){
+        // console.log('its ok');
+        let delBtn = e.target;
+        delBtn.parentNode.parentNode.remove();
+        taskCounterUpdate()
     }
 }
